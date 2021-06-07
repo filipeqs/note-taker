@@ -2,6 +2,10 @@
     const body = document.querySelector('body');
     const themeInput = document.getElementById('theme-input');
     const newCard = document.getElementById('card-new');
+    const newNoteTitle = document.getElementById('note-title');
+    const newNoteDesc = document.getElementById('note-description');
+    const modal = document.getElementById('modal');
+
     let themeColor = '#0079bf';
 
     const isDark = (hexcolor) => {
@@ -12,19 +16,45 @@
         return yiq <= 128 ? true : false;
     };
 
+    const setBodyColor = () => (body.style.backgroundColor = themeColor);
+
+    const setInputBorderColor = () => {
+        newNoteTitle.style.borderColor = themeColor;
+        newNoteDesc.style.borderColor = themeColor;
+    };
+
     const setThemeColor = () => {
         localStorage.setItem('themeColor', JSON.stringify(themeColor));
         themeInput.value = themeColor;
-        body.style.backgroundColor = themeColor;
+        setBodyColor();
+        setInputBorderColor();
         isDark(themeColor.substr(1, 6))
             ? (newCard.style.color = '#ffffff')
             : (newCard.style.color = '#000000');
+    };
+
+    const closeModal = () => {
+        modal.classList.add('modal-hide');
+    };
+
+    const showModal = () => {
+        modal.classList.remove('modal-hide');
     };
 
     // Event Listeners
     themeInput.addEventListener('change', (e) => {
         themeColor = e.target.value;
         setThemeColor();
+    });
+
+    newCard.addEventListener('click', showModal);
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('modal-hide')) closeModal();
     });
 
     // On Load

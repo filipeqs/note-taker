@@ -30,6 +30,30 @@
             <div class="card"></div>
             <div class="card-new" id="card-new">Add new Note</div>
         </div>
+        <div class="modal modal-hide" id="modal">
+            <div class="modal-content">
+                <form id="card-form" class="card-form">
+                    <!-- Title -->
+                    <div class="form-group">
+                        <label for="note-title" class="form-label">Title</label>
+                        <input type="text" id="note-title" class="form-input" placeholder="Title" />
+                    </div>
+                    <!-- Text -->
+                    <div class="form-group">
+                        <label for="note-description" class="form-label">Description</label>
+                        <textarea
+                            cols="30"
+                            rows="10"
+                            placeholder="Description"
+                            id="note-description"
+                            class="form-textarea"
+                        ></textarea>
+                    </div>
+                    <!-- Button -->
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+        </div>
     </body>
     <script src="./script.js"></script>
 </html>
