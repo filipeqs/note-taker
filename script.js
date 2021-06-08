@@ -1,18 +1,43 @@
 (function () {
     const root = document.documentElement;
     const themeInput = document.getElementById('theme-input');
-    const newCard = document.getElementById('card-new');
+    const newCardBtn = document.getElementById('card-new');
     const newNoteTitle = document.getElementById('note-title');
     const newNoteDesc = document.getElementById('note-description');
     const formBtn = document.getElementById('form-btn');
     const modal = document.getElementById('modal');
+    const cardContainer = document.getElementById('card-container');
 
     let themeColor = '#0079bf';
+
+    let notes = [];
 
     // Local Storage
     const saveToLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
-    const getFromLocalStorage = (key) => localStorage.getItem(key);
+    const getFromLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
+
+    // Notes
+    const loadNotes = () => {
+        cardContainer.innerHTML = '';
+        notes.forEach((note) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            const title = document.createElement('h3');
+            title.classList.add('card-title');
+            title.textContent = note.title;
+
+            const desc = document.createElement('p');
+            desc.classList.add('card-text');
+            desc.textContent = note.desc;
+
+            card.append(title, desc);
+
+            cardContainer.appendChild(card);
+        });
+        cardContainer.appendChild(newCardBtn);
+    };
 
     // Theme
     const isDark = (hexcolor) => {
@@ -53,7 +78,7 @@
         setThemeColor();
     });
 
-    newCard.addEventListener('click', showModal);
+    newCardBtn.addEventListener('click', showModal);
 
     window.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
@@ -63,11 +88,30 @@
         if (e.key === 'Escape' && !modal.classList.contains('modal-hide')) closeModal();
     });
 
+    formBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!newNoteTitle.value || !newNoteDesc.value) {
+            alert('Plase add Title and Description');
+        } else {
+            notes.push({
+                title: newNoteTitle.value,
+                desc: newNoteDesc.value,
+            });
+            saveToLocalStorage('notes', notes);
+            loadNotes();
+        }
+    });
+
     // On Load
     if (getFromLocalStorage('themeColor')) {
-        themeColor = JSON.parse(getFromLocalStorage('themeColor'));
+        themeColor = getFromLocalStorage('themeColor');
         setThemeColor();
     } else {
         setThemeColor();
+    }
+
+    if (getFromLocalStorage('notes')) {
+        notes = getFromLocalStorage('notes');
+        loadNotes();
     }
 })();

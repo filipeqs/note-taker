@@ -34,6 +34,12 @@ body {
     align-items: flex-start;
 }
 
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
 .card {
     width: 200px;
     min-height: 200px;
@@ -82,6 +88,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: modalopen 1s;
+}
+
+@keyframes modalopen {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-content {
