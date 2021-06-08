@@ -61,6 +61,14 @@ body {
     text-align: justify;
 }
 
+.fa-times {
+    cursor: pointer;
+    float: right;
+    position: relative;
+    top: 3px;
+    font-size: 15px;
+}
+
 .card-new {
     padding: 10px 10px;
     border-radius: 10px;
