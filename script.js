@@ -4,9 +4,32 @@
     const newCard = document.getElementById('card-new');
     const newNoteTitle = document.getElementById('note-title');
     const newNoteDesc = document.getElementById('note-description');
+    const formBtn = document.getElementById('form-btn');
     const modal = document.getElementById('modal');
 
     let themeColor = '#0079bf';
+    const theme = [
+        {
+            element: body,
+            place: 'backgroundColor',
+        },
+        {
+            element: newNoteTitle,
+            place: 'borderColor',
+        },
+        {
+            element: newNoteDesc,
+            place: 'borderColor',
+        },
+        {
+            element: formBtn,
+            place: 'backgroundColor',
+        },
+    ];
+
+    const saveToLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+
+    const getFromLocalStorage = (key) => localStorage.getItem(key);
 
     const isDark = (hexcolor) => {
         var r = parseInt(hexcolor.substr(0, 2), 16);
@@ -16,21 +39,24 @@
         return yiq <= 128 ? true : false;
     };
 
-    const setBodyColor = () => (body.style.backgroundColor = themeColor);
+    const setColorPicker = () => (themeInput.value = themeColor);
 
-    const setInputBorderColor = () => {
-        newNoteTitle.style.borderColor = themeColor;
-        newNoteDesc.style.borderColor = themeColor;
-    };
+    const setElementsColors = () =>
+        theme.forEach(({ element, place }) => {
+            element.style[place] = themeColor;
+        });
 
-    const setThemeColor = () => {
-        localStorage.setItem('themeColor', JSON.stringify(themeColor));
-        themeInput.value = themeColor;
-        setBodyColor();
-        setInputBorderColor();
+    const setTextColor = () => {
         isDark(themeColor.substr(1, 6))
             ? (newCard.style.color = '#ffffff')
             : (newCard.style.color = '#000000');
+    };
+
+    const setThemeColor = () => {
+        saveToLocalStorage('themeColor', themeColor);
+        setColorPicker();
+        setElementsColors();
+        setTextColor();
     };
 
     const closeModal = () => {
@@ -58,8 +84,8 @@
     });
 
     // On Load
-    if (localStorage.getItem('themeColor')) {
-        themeColor = JSON.parse(localStorage.getItem('themeColor'));
+    if (getFromLocalStorage('themeColor')) {
+        themeColor = JSON.parse(getFromLocalStorage('themeColor'));
         setThemeColor();
     } else {
         setThemeColor();
