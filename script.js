@@ -1,5 +1,5 @@
 (function () {
-    const body = document.querySelector('body');
+    const root = document.documentElement;
     const themeInput = document.getElementById('theme-input');
     const newCard = document.getElementById('card-new');
     const newNoteTitle = document.getElementById('note-title');
@@ -8,29 +8,13 @@
     const modal = document.getElementById('modal');
 
     let themeColor = '#0079bf';
-    const theme = [
-        {
-            element: body,
-            place: 'backgroundColor',
-        },
-        {
-            element: newNoteTitle,
-            place: 'borderColor',
-        },
-        {
-            element: newNoteDesc,
-            place: 'borderColor',
-        },
-        {
-            element: formBtn,
-            place: 'backgroundColor',
-        },
-    ];
 
+    // Local Storage
     const saveToLocalStorage = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
     const getFromLocalStorage = (key) => localStorage.getItem(key);
 
+    // Theme
     const isDark = (hexcolor) => {
         var r = parseInt(hexcolor.substr(0, 2), 16);
         var g = parseInt(hexcolor.substr(2, 2), 16);
@@ -41,24 +25,20 @@
 
     const setColorPicker = () => (themeInput.value = themeColor);
 
-    const setElementsColors = () =>
-        theme.forEach(({ element, place }) => {
-            element.style[place] = themeColor;
-        });
-
     const setTextColor = () => {
         isDark(themeColor.substr(1, 6))
-            ? (newCard.style.color = '#ffffff')
-            : (newCard.style.color = '#000000');
+            ? root.style.setProperty('--text-color', '#ffffff')
+            : root.style.setProperty('--text-color', '#000000');
     };
 
     const setThemeColor = () => {
+        root.style.setProperty('--primari-color', themeColor);
         saveToLocalStorage('themeColor', themeColor);
         setColorPicker();
-        setElementsColors();
         setTextColor();
     };
 
+    // Modal
     const closeModal = () => {
         modal.classList.add('modal-hide');
     };
