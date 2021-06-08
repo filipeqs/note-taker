@@ -94,6 +94,7 @@
             alert('Plase add Title and Description');
         } else {
             notes.push({
+                id: Math.random(),
                 title: newNoteTitle.value,
                 desc: newNoteDesc.value,
             });
