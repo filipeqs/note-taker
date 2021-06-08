@@ -12,6 +12,7 @@
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
     background-color: var(--primari-color);
 }
 
@@ -24,7 +25,6 @@ body {
 }
 
 .header-title {
-    font-size: 20px;
     color: white;
 }
 
@@ -135,6 +135,7 @@ body {
     display: block;
     outline: none;
     border-color: var(--primari-color);
+    font-family: 'Roboto', sans-serif;
 }
 
 .form-textarea {
@@ -146,6 +147,7 @@ body {
     display: block;
     outline: none;
     border-color: var(--primari-color);
+    font-family: 'Roboto', sans-serif;
 }
 
 .form-label {
@@ -163,6 +165,7 @@ body {
     margin-top: 10px;
     margin: 0;
     background-color: var(--primari-color);
+    font-family: 'Roboto', sans-serif;
 }
 
 .form-btn:hover {
