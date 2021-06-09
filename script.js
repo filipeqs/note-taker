@@ -52,6 +52,11 @@ const deleteNote = (id) => {
     }
 };
 
+const clearNewNoteInputs = () => {
+    newNoteTitle.value = '';
+    newNoteDesc.value = '';
+};
+
 // Theme
 const isDark = (hexcolor) => {
     var r = parseInt(hexcolor.substr(0, 2), 16);
@@ -113,6 +118,8 @@ formBtn.addEventListener('click', (e) => {
         });
         saveToLocalStorage('notes', notes);
         loadNotes();
+        closeModal();
+        clearNewNoteInputs();
     }
 });
 
